@@ -1,24 +1,26 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:multi_store_application/widgets/fake_search.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class CustomerHomeScreen extends StatefulWidget {
+  const CustomerHomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<CustomerHomeScreen> createState() => _CustomerHomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 9,
       child: Scaffold(
         appBar: AppBar(
-          title: const CupertinoSearchTextField(),
+          title: const FakeSearch(),
           backgroundColor: Colors.white,
           elevation: 0.0,
           bottom: const TabBar(
+            indicatorColor: Colors.yellow,
+            indicatorWeight: 7.0,
             isScrollable: true,
             tabs: [
               RepeatedTab(
