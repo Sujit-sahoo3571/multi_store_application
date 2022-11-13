@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class AppbarTitle extends StatelessWidget {
   const AppbarTitle({
     Key? key,
@@ -14,7 +13,10 @@ class AppbarTitle extends StatelessWidget {
     return Text(
       subCategoryName.toUpperCase(),
       style: const TextStyle(
-          color: Colors.black, fontFamily: 'Poppins', letterSpacing: 1.2),
+          fontSize: 16.0,
+          color: Colors.black,
+          fontFamily: 'Poppins',
+          letterSpacing: 1.2),
     );
   }
 }

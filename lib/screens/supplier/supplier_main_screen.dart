@@ -9,8 +9,8 @@ import 'package:multi_store_application/screens/supplier/dashboard_screen.dart';
 // ignore: must_be_immutable
 class SupplierBottomNavigation extends StatefulWidget {
   int selectedIndex;
-
-  SupplierBottomNavigation({super.key, this.selectedIndex = 3});
+  static const supplierHomeRouteName = '/supplier_home';
+  SupplierBottomNavigation({super.key, this.selectedIndex = 0});
 
   @override
   State<SupplierBottomNavigation> createState() =>

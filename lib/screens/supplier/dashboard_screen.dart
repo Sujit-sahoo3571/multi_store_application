@@ -1,26 +1,44 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:multi_store_application/dashboard_component/dash_balance.dart';
+import 'package:multi_store_application/dashboard_component/dash_mangeprod.dart';
+import 'package:multi_store_application/dashboard_component/dash_order.dart';
+import 'package:multi_store_application/dashboard_component/dash_settings.dart';
+import 'package:multi_store_application/dashboard_component/dash_statistic.dart';
+import 'package:multi_store_application/dashboard_component/mystore_screen.dart';
+import 'package:multi_store_application/screens/welcomescreen/welcome_screen.dart';
+import 'package:multi_store_application/widgets/alertdialog.dart';
 import 'package:multi_store_application/widgets/appbar_widgets.dart';
+
+const List<String> labels = [
+  'My Store',
+  'Orders',
+  'Manage Product',
+  'Settings',
+  'Balance',
+  'Statistics',
+];
+
+const List<IconData> icons = [
+  Icons.store,
+  Icons.shopify,
+  Icons.edit,
+  Icons.settings_applications,
+  Icons.currency_rupee,
+  Icons.show_chart
+];
+
+const List dashboardScreens = [
+  DashMyStore(),
+  DashOrderScreen(),
+  DashMangaeProduct(),
+  DashSettings(),
+  DashBalanceScreen(),
+  DashStatistic(),
+];
 
 class DashBoardScreen extends StatelessWidget {
   const DashBoardScreen({super.key});
-
-  final List<String> labels = const [
-    'My Store',
-    'Orders',
-    'Manage Product',
-    'Settings',
-    'Balance',
-    'Statistics',
-  ];
-
-  final List<IconData> icons = const [
-    Icons.store,
-    Icons.shopify,
-    Icons.edit,
-    Icons.settings_applications,
-    Icons.currency_rupee,
-    Icons.show_chart
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +51,31 @@ class DashBoardScreen extends StatelessWidget {
         actions: [
           IconButton(
             tooltip: "Logout",
-            onPressed: () {},
+            onPressed: () async {
+              await showalertDialogactionmsg(
+                  context: context,
+                  title: "Logout",
+                  content: "Are you sure to logout? ",
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text("No"),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        await FirebaseAuth.instance.signOut();
+                        // ignore: use_build_context_synchronously
+                        Navigator.of(context).pop();
+                        // ignore: use_build_context_synchronously
+                        Navigator.pushReplacementNamed(
+                            context, WelcomeScreen.welcomeRouteName);
+                      },
+                      child: const Text("Yes"),
+                    ),
+                  ]);
+            },
             icon: const Icon(
               Icons.logout,
               color: Colors.black,
@@ -52,27 +94,33 @@ class DashBoardScreen extends StatelessWidget {
           crossAxisSpacing: 20.0,
           children: List.generate(
               6,
-              (index) => Card(
-                    elevation: 25.0,
-                    shadowColor: Colors.limeAccent,
-                    color: Colors.lightBlueAccent,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Icon(
-                          icons[index],
-                          size: 40.0,
-                          color: Colors.yellowAccent,
-                        ),
-                        Text(
-                          labels[index].toUpperCase(),
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 20.0,
-                              fontFamily: 'Poppins'),
-                        )
-                      ],
+              (index) => InkWell(
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => dashboardScreens[index])),
+                    child: Card(
+                      elevation: 25.0,
+                      shadowColor: Colors.limeAccent,
+                      color: Colors.lightBlueAccent,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Icon(
+                            icons[index],
+                            size: 40.0,
+                            color: Colors.yellowAccent,
+                          ),
+                          Text(
+                            labels[index].toUpperCase(),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                                fontFamily: 'Poppins'),
+                          )
+                        ],
+                      ),
                     ),
                   )),
         ),

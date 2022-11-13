@@ -1,6 +1,13 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:multi_store_application/widgets/yellow_button.dart';
+import 'package:multi_store_application/loginscreen/customer_login.dart';
+import 'package:multi_store_application/loginscreen/customer_signup_page.dart';
+import 'package:multi_store_application/loginscreen/supplier_login.dart';
+import 'package:multi_store_application/loginscreen/supplier_signup.dart';
+import 'package:multi_store_application/screens/customer_main_screen.dart';
+import 'package:multi_store_application/widgets/button_animlogo.dart';
 
 const kcolorizedColors = [
   Colors.purple,
@@ -12,6 +19,7 @@ const ktextStyle = TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold);
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
+  static const welcomeRouteName = '/welcome_screen';
 
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();
@@ -20,6 +28,11 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+  bool isLoading = false;
+  CollectionReference customers =
+      FirebaseFirestore.instance.collection('customers');
+
+  late String _uid;
 
   @override
   void initState() {
@@ -31,8 +44,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -133,12 +146,18 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                             ContainerYellowButton(
                               label: 'SignUp',
                               width: 0.25,
-                              onpressed: (() {}),
+                              onpressed: () {
+                                Navigator.pushReplacementNamed(context,
+                                    SupplierSignUpScreen.signUpRouteName);
+                              },
                             ),
                             ContainerYellowButton(
                               label: 'LogIn',
                               width: 0.25,
-                              onpressed: (() {}),
+                              onpressed: () {
+                                Navigator.pushReplacementNamed(context,
+                                    SupplierLogInScreen.signInRoutName);
+                              },
                             )
                           ],
                         ),
@@ -169,12 +188,16 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                         ContainerYellowButton(
                           label: 'SignUp',
                           width: 0.25,
-                          onpressed: (() {}),
+                          onpressed: () => Navigator.pushReplacementNamed(
+                              context, CustomerSignUpScreen.signUpRouteName),
                         ),
                         ContainerYellowButton(
                           label: 'LogIn',
                           width: 0.25,
-                          onpressed: (() {}),
+                          onpressed: () {
+                            Navigator.pushReplacementNamed(
+                                context, CustomerLogInScreen.signInRoutName);
+                          },
                         ),
                         AnimatedLogo(controller: _controller),
                       ],
@@ -200,10 +223,36 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                         label: 'Facebook',
                         onpressed: () {},
                       ),
-                      GoogleIconButton(
-                          image: 'assets/images/profile.png',
-                          label: 'Guest',
-                          onpressed: () {}),
+                      isLoading
+                          ? const CircularProgressIndicator()
+                          : GoogleIconButton(
+                              image: 'assets/images/profile.png',
+                              label: 'Guest',
+                              onpressed: () async {
+                                setState(() {
+                                  isLoading = true;
+                                });
+                                await FirebaseAuth.instance
+                                    .signInAnonymously()
+                                    .whenComplete(() async {
+                                  _uid = FirebaseAuth.instance.currentUser!.uid;
+                                  await customers.doc(_uid).set({
+                                    'name': '',
+                                    'email': '',
+                                    'phone': '',
+                                    'profileimage': '',
+                                    'address': '',
+                                    'cid': _uid,
+                                  });
+                                });
+
+                                // ignore: use_build_context_synchronously
+                                Navigator.pushReplacementNamed(
+                                    context,
+                                    CustomerBottomNavigation
+                                        .customerHomeRouteName);
+                                isLoading = false;
+                              }),
                     ],
                   ),
                 ),

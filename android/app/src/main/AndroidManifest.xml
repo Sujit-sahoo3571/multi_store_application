@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.multi_store_application">
+    package="com.iamwithinyou.multi_store">
    <application
         android:label="multi_store_application"
         android:name="${applicationName}"

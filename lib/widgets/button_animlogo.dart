@@ -32,17 +32,20 @@ class ContainerYellowButton extends StatelessWidget {
 class MaterialYellowButton extends StatelessWidget {
   final String label;
   final void Function()? onpressed;
+  final double elevation;
   final double width;
   const MaterialYellowButton({
     Key? key,
     required this.label,
-    required this.width,
+    this.width = 0.25,
     required this.onpressed,
+    this.elevation = 0.0,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Material(
+      elevation: elevation,
       borderRadius: BorderRadius.circular(50.0),
       color: Colors.yellow,
       child: MaterialButton(

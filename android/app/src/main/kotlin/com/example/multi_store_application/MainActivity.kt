@@ -1,4 +1,4 @@
-package com.example.multi_store_application
+package com.iamwithinyou.multi_store
 
 import io.flutter.embedding.android.FlutterActivity
 

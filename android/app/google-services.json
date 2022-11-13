@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "833117481972",
+    "project_id": "multi-store-cb395",
+    "storage_bucket": "multi-store-cb395.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:833117481972:android:ac096882614b8face167a1",
+        "android_client_info": {
+          "package_name": "com.iamwithinyou.multi_store"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "833117481972-hro3j8pe3991ijceee7knjkn5v6u6b6i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iamwithinyou.multi_store",
+            "certificate_hash": "8245463a995a217d94898859ec848f0d04b123b0"
+          }
+        },
+        {
+          "client_id": "833117481972-rcc9o7in3ofo10aio2pc7s1bqeqdi32n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOHHNA3yuBROglyV_Rn-OrLaj8myl2Aq8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "833117481972-rcc9o7in3ofo10aio2pc7s1bqeqdi32n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

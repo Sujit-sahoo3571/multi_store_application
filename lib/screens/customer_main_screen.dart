@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_store_application/screens/category_screen.dart';
 import 'package:multi_store_application/screens/customer_cart_screen.dart';
@@ -8,6 +9,7 @@ import 'package:multi_store_application/screens/customer_home_screen.dart';
 // ignore: must_be_immutable
 class CustomerBottomNavigation extends StatefulWidget {
   int selectedIndex;
+  static const customerHomeRouteName = '/customer_home';
 
   CustomerBottomNavigation({super.key, this.selectedIndex = 0});
 
@@ -17,12 +19,14 @@ class CustomerBottomNavigation extends StatefulWidget {
 }
 
 class _CustomerBottomNavigationState extends State<CustomerBottomNavigation> {
-  final List<Widget> _tabs = const [
-    CustomerHomeScreen(),
-    CategoryScreen(),
-    CustomerStoreScreen(),
-    CustomerCartScreen(),
-    CustomerProfileScreen(),
+  final List<Widget> _tabs = [
+    const CustomerHomeScreen(),
+    const CategoryScreen(),
+    const CustomerStoreScreen(),
+    const CustomerCartScreen(),
+    CustomerProfileScreen(
+      documentId: FirebaseAuth.instance.currentUser!.uid,
+    ),
   ];
   @override
   Widget build(BuildContext context) {
