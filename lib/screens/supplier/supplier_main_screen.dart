@@ -5,12 +5,13 @@ import 'package:multi_store_application/screens/category_screen.dart';
 import 'package:multi_store_application/screens/customer_storescreen.dart';
 import 'package:multi_store_application/screens/customer_home_screen.dart';
 import 'package:multi_store_application/screens/supplier/dashboard_screen.dart';
+import 'package:multi_store_application/screens/supplier/upload_screen.dart';
 
 // ignore: must_be_immutable
 class SupplierBottomNavigation extends StatefulWidget {
   int selectedIndex;
   static const supplierHomeRouteName = '/supplier_home';
-  SupplierBottomNavigation({super.key, this.selectedIndex = 0});
+  SupplierBottomNavigation({super.key, this.selectedIndex = 4}); // TODO
 
   @override
   State<SupplierBottomNavigation> createState() =>
@@ -23,9 +24,7 @@ class _SupplierBottomNavigationState extends State<SupplierBottomNavigation> {
     CategoryScreen(),
     CustomerStoreScreen(),
     DashBoardScreen(),
-    Center(
-      child: Text("Upload"),
-    ),
+    UploadProductScreen()
   ];
   @override
   Widget build(BuildContext context) {

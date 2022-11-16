@@ -1,4 +1,18 @@
+List<String> maincategory = [
+  'maincategory',
+  'men',
+  'women',
+  'kids',
+  "gadgets",
+  "paintings",
+  "swords",
+  "watches",
+  "bags",
+  "games",
+];
+
 List<String> women = [
+  'subcategory',
   'skrit',
   'jeans',
   'jacket',
@@ -6,6 +20,7 @@ List<String> women = [
 ];
 
 List<String> men = [
+  'subcategory',
   'sneakers',
   'shirts',
   'watches',
@@ -13,6 +28,7 @@ List<String> men = [
 ];
 
 List<String> kids = [
+  'subcategory',
   'shirts',
   'gloves',
   'toys',
@@ -20,18 +36,43 @@ List<String> kids = [
 ];
 
 List<String> gadgets = [
+  'subcategory',
   'laptops',
   'mobilephone',
   'headsets',
   'cameras',
 ];
 
-List<String> paintings = ['picasso', 'art galleries', 'wallpaper', 'Themes'];
+List<String> paintings = [
+  'subcategory',
+  'picasso',
+  'art galleries',
+  'wallpaper',
+  'Themes'
+];
 
-List<String> bags = ['handbags', 'partywears', 'pouches', 'shoulder bags'];
+List<String> bags = [
+  'subcategory',
+  'handbags',
+  'partywears',
+  'pouches',
+  'shoulder bags'
+];
 
-List<String> watches = ['Titans', 'Sonata', 'Fastrack', 'G-shock'];
+List<String> watches = [
+  'subcategory',
+  'Titans',
+  'Sonata',
+  'Fastrack',
+  'G-shock'
+];
 
-List<String> swords = ['katana', 'knife', 'swords', 'leaser'];
+List<String> swords = ['subcategory', 'katana', 'knife', 'swords', 'leaser'];
 
-List<String> games = ['Adventure', 'Survival', 'Strategies', 'Action'];
+List<String> games = [
+  'subcategory',
+  'Adventure',
+  'Survival',
+  'Strategies',
+  'Action'
+];

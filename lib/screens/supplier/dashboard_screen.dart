@@ -6,7 +6,7 @@ import 'package:multi_store_application/dashboard_component/dash_order.dart';
 import 'package:multi_store_application/dashboard_component/dash_settings.dart';
 import 'package:multi_store_application/dashboard_component/dash_statistic.dart';
 import 'package:multi_store_application/dashboard_component/mystore_screen.dart';
-import 'package:multi_store_application/screens/welcomescreen/welcome_screen.dart';
+import 'package:multi_store_application/screens/welcome_screen.dart';
 import 'package:multi_store_application/widgets/alertdialog.dart';
 import 'package:multi_store_application/widgets/appbar_widgets.dart';
 

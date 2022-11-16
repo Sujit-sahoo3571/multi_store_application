@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:multi_store_application/loginscreen/customer_signup_page.dart';
 import 'package:multi_store_application/screens/customer_main_screen.dart';
-import 'package:multi_store_application/screens/welcomescreen/welcome_screen.dart';
+import 'package:multi_store_application/screens/welcome_screen.dart';
 import 'package:multi_store_application/widgets/alertdialog.dart';
 import 'package:multi_store_application/widgets/button_animlogo.dart';
 import 'package:multi_store_application/widgets/signup_widget.dart';
@@ -23,6 +24,9 @@ class _CustomerLogInScreenState extends State<CustomerLogInScreen> {
   late String email;
   late String password;
   bool isprocessing = false;
+
+  CollectionReference customers =
+      FirebaseFirestore.instance.collection('customers');
 
   @override
   Widget build(BuildContext context) {
@@ -158,6 +162,12 @@ class _CustomerLogInScreenState extends State<CustomerLogInScreen> {
           email: email,
           password: password,
         );
+//TODO
+        // print("credential: ${credential.user!.uid} ");
+        // print("final customer: ${FirebaseAuth.instance.currentUser!.uid} ");
+        // final data = await customers.doc(credential.user!.uid).get();
+        // print('customer data of id : ${data['role']}');
+
         _formKey.currentState!.reset();
 
         stopprocessing();
@@ -168,14 +178,14 @@ class _CustomerLogInScreenState extends State<CustomerLogInScreen> {
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
           stopprocessing();
-          print('No user found for that email.');
+          // print('No user found for that email.');
           showAlertDialogmsg(
               context: context,
               title: "No User Found!",
               content: "No user found for that email.");
         } else if (e.code == 'wrong-password') {
           stopprocessing();
-          print('Wrong password provided for that user.');
+          // print('Wrong password provided for that user.');
           showAlertDialogmsg(
               context: context,
               title: "Wrong Password",
@@ -183,7 +193,7 @@ class _CustomerLogInScreenState extends State<CustomerLogInScreen> {
         }
       } catch (e) {
         stopprocessing();
-        print(e.toString());
+        Center(child: Text(e.toString()));
       }
     } else {
       stopprocessing();

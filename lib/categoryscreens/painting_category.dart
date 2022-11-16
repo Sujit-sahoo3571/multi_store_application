@@ -31,12 +31,12 @@ class PaintingCategory extends StatelessWidget {
                     mainAxisSpacing: 20.0,
                     crossAxisSpacing: 10.0,
                     children: List.generate(
-                      paintings.length,
+                      paintings.length-1,
                       (index) => CategoryImageView(
                         mainCategory: 'Paintings',
-                        subCategory: paintings[index],
+                        subCategory: paintings[index+1],
                         image: 'assets/images/image${index + 1}.jpg',
-                        label: paintings[index],
+                        label: paintings[index+1],
                       ),
                     ),
                   ),

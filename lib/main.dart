@@ -5,7 +5,7 @@ import 'package:multi_store_application/loginscreen/supplier_login.dart';
 import 'package:multi_store_application/loginscreen/supplier_signup.dart';
 import 'package:multi_store_application/screens/customer_main_screen.dart';
 import 'package:multi_store_application/screens/supplier/supplier_main_screen.dart';
-import 'package:multi_store_application/screens/welcomescreen/welcome_screen.dart';
+import 'package:multi_store_application/screens/welcome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {

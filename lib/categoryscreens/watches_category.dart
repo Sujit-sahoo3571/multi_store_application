@@ -31,12 +31,12 @@ class WatchesCategory extends StatelessWidget {
                     mainAxisSpacing: 20.0,
                     crossAxisSpacing: 10.0,
                     children: List.generate(
-                      watches.length,
+                      watches.length-1,
                       (index) => CategoryImageView(
                         mainCategory: 'Watches',
-                        subCategory: watches[index],
+                        subCategory: watches[index+1],
                         image: 'assets/images/image${index + 1}.jpg',
-                        label: watches[index],
+                        label: watches[index+1],
                       ),
                     ),
                   ),

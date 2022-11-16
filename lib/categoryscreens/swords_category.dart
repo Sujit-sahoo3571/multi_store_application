@@ -31,12 +31,12 @@ class SwordCategory extends StatelessWidget {
                     mainAxisSpacing: 20.0,
                     crossAxisSpacing: 10.0,
                     children: List.generate(
-                      swords.length,
+                      swords.length-1,
                       (index) => CategoryImageView(
                         mainCategory: 'Swords',
-                        subCategory: swords[index],
+                        subCategory: swords[index+1],
                         image: 'assets/images/image${index + 1}.jpg',
-                        label: swords[index],
+                        label: swords[index+1],
                       ),
                     ),
                   ),

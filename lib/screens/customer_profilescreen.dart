@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:multi_store_application/cust_ord_wish/customer_order.dart';
 import 'package:multi_store_application/cust_ord_wish/customer_wishlist.dart';
 import 'package:multi_store_application/screens/customer_cart_screen.dart';
-import 'package:multi_store_application/screens/welcomescreen/welcome_screen.dart';
+import 'package:multi_store_application/screens/welcome_screen.dart';
 import 'package:multi_store_application/widgets/alertdialog.dart';
 import 'package:multi_store_application/widgets/listtile_widget.dart';
 

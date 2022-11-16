@@ -31,12 +31,12 @@ class WomenCategory extends StatelessWidget {
                     mainAxisSpacing: 20.0,
                     crossAxisSpacing: 10.0,
                     children: List.generate(
-                      women.length,
+                      women.length-1,
                       (index) => CategoryImageView(
                         mainCategory: 'Women',
-                        subCategory: women[index],
+                        subCategory: women[index+1],
                         image: 'assets/images/image${index + 1}.jpg',
-                        label: women[index],
+                        label: women[index+1],
                       ),
                     ),
                   ),

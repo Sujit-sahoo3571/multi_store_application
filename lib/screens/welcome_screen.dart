@@ -243,6 +243,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                                     'profileimage': '',
                                     'address': '',
                                     'cid': _uid,
+                                    'role': 'user',
                                   });
                                 });
 

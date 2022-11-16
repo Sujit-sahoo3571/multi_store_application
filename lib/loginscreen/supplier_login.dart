@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:multi_store_application/loginscreen/supplier_signup.dart';
 import 'package:multi_store_application/screens/supplier/supplier_main_screen.dart';
-import 'package:multi_store_application/screens/welcomescreen/welcome_screen.dart';
+import 'package:multi_store_application/screens/welcome_screen.dart';
 import 'package:multi_store_application/widgets/alertdialog.dart';
 import 'package:multi_store_application/widgets/button_animlogo.dart';
 import 'package:multi_store_application/widgets/signup_widget.dart';

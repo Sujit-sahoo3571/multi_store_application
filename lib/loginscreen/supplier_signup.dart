@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_store_application/loginscreen/supplier_login.dart';
-import 'package:multi_store_application/screens/welcomescreen/welcome_screen.dart';
+import 'package:multi_store_application/screens/welcome_screen.dart';
 import 'package:multi_store_application/widgets/alertdialog.dart';
 import 'package:multi_store_application/widgets/button_animlogo.dart';
 import 'package:multi_store_application/widgets/signup_widget.dart';
@@ -261,6 +261,7 @@ class _SupplierSignUpScreenState extends State<SupplierSignUpScreen> {
             'address': '',
             'sid': _uid,
             'coverimage': '',
+            'role':'admin',
           });
 
           _formKey.currentState!.reset();
@@ -293,16 +294,18 @@ class _SupplierSignUpScreenState extends State<SupplierSignUpScreen> {
         }
       } else {
         stopprocessing();
-        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            backgroundColor: Colors.red,
-            content: Text(
-              "Pick an image first !!! ",
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-              ),
-            )));
+        // ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(const SnackBar(
+              backgroundColor: Colors.red,
+              content: Text(
+                "Pick an image first !!! ",
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              )));
       }
     } else {
       stopprocessing();
