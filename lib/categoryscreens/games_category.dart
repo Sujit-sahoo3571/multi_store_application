@@ -33,7 +33,7 @@ class GamesCategory extends StatelessWidget {
                     children: List.generate(
                       games.length-1,
                       (index) => CategoryImageView(
-                        mainCategory: 'Games',
+                        mainCategory: 'games',
                         subCategory: games[index+1],
                         image: 'assets/images/image${index + 1}.jpg',
                         label: games[index+1],

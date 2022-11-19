@@ -33,7 +33,7 @@ class BagCategory extends StatelessWidget {
                     children: List.generate(
                       bags.length -1,
                       (index) => CategoryImageView(
-                        mainCategory: 'Bags',
+                        mainCategory: 'bags',
                         subCategory: bags[index+1],
                         image: 'assets/images/image${index + 1}.jpg',
                         label: bags[index+1],

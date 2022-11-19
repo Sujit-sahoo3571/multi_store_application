@@ -1,4 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:multi_store_application/gallaries/bags_gallery.dart';
+import 'package:multi_store_application/gallaries/gadgets_gallery.dart';
+import 'package:multi_store_application/gallaries/games_gallary.dart';
+import 'package:multi_store_application/gallaries/kids_gallery.dart';
+import 'package:multi_store_application/gallaries/men_gallary.dart';
+import 'package:multi_store_application/gallaries/painting_gallary.dart';
+import 'package:multi_store_application/gallaries/swords_gallary.dart';
+import 'package:multi_store_application/gallaries/watches_gallery.dart';
+import 'package:multi_store_application/gallaries/women_gallery.dart';
 import 'package:multi_store_application/widgets/fake_search.dart';
 
 class CustomerHomeScreen extends StatefulWidget {
@@ -14,6 +23,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
     return DefaultTabController(
       length: 9,
       child: Scaffold(
+        backgroundColor: const Color(0x99CFF5E7),
         appBar: AppBar(
           title: const FakeSearch(),
           backgroundColor: Colors.white,
@@ -45,7 +55,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
                 label: "Swords",
               ),
               RepeatedTab(
-                label: "paintings",
+                label: "Paintings",
               ),
               RepeatedTab(
                 label: "Games",
@@ -54,33 +64,15 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
           ),
         ),
         body: const TabBarView(children: [
-          Center(
-            child: Text("Men"),
-          ),
-          Center(
-            child: Text("Women"),
-          ),
-          Center(
-            child: Text("Kids"),
-          ),
-          Center(
-            child: Text("Gadgets"),
-          ),
-          Center(
-            child: Text("Bags"),
-          ),
-          Center(
-            child: Text("watches"),
-          ),
-          Center(
-            child: Text("swords"),
-          ),
-          Center(
-            child: Text("Paintings"),
-          ),
-          Center(
-            child: Text("Games"),
-          ),
+          MenGalleryScreen(),
+          WomenGalleryScreen(),
+          KidsGalleryScreen(),
+          GadgetsGalleryScreen(),
+          BagsGalleryScreen(),
+          WatchesGalleryScreen(),
+          SwordsGalleryScreen(),
+          PaintingGalleryScreen(),
+          GamesGalleryScreen(),
         ]),
       ),
     );

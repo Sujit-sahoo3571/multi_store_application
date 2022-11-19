@@ -84,12 +84,15 @@ class CategoryImageView extends StatelessWidget {
       children: [
         InkWell(
           onTap: (() {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return SubCategory(
-                mainCategoryName: mainCategory,
-                subCategoryName: subCategory,
-              );
-            }));
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) {
+                return SubCategory(
+                  mainCategoryName: mainCategory,
+                  subCategoryName: subCategory,
+                );
+              }),
+            );
           }),
           child: SizedBox(
             width: 80.0,

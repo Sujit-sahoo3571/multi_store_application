@@ -33,7 +33,7 @@ class WatchesCategory extends StatelessWidget {
                     children: List.generate(
                       watches.length-1,
                       (index) => CategoryImageView(
-                        mainCategory: 'Watches',
+                        mainCategory: 'watches',
                         subCategory: watches[index+1],
                         image: 'assets/images/image${index + 1}.jpg',
                         label: watches[index+1],

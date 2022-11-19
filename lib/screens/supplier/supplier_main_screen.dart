@@ -11,7 +11,7 @@ import 'package:multi_store_application/screens/supplier/upload_screen.dart';
 class SupplierBottomNavigation extends StatefulWidget {
   int selectedIndex;
   static const supplierHomeRouteName = '/supplier_home';
-  SupplierBottomNavigation({super.key, this.selectedIndex = 4}); // TODO
+  SupplierBottomNavigation({super.key, this.selectedIndex = 0}); // TODO
 
   @override
   State<SupplierBottomNavigation> createState() =>
