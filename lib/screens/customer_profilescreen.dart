@@ -24,13 +24,17 @@ class CustomerProfileScreen extends StatefulWidget {
 
 class _CustomerProfileScreenState extends State<CustomerProfileScreen> {
   CollectionReference customers =
-      FirebaseFirestore.instance.collection('customers');
+      FirebaseFirestore.instance.collection('customers'); //anonymus
+  CollectionReference anonymus =
+      FirebaseFirestore.instance.collection('anonymus');
   @override
   Widget build(BuildContext context) {
     final kscreen = MediaQuery.of(context).size;
 
     return FutureBuilder<DocumentSnapshot>(
-      future: customers.doc(widget.documentId).get(),
+      future: FirebaseAuth.instance.currentUser!.isAnonymous
+          ? anonymus.doc(widget.documentId).get()
+          : customers.doc(widget.documentId).get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {

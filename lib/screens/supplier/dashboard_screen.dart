@@ -5,7 +5,7 @@ import 'package:multi_store_application/dashboard_component/dash_mangeprod.dart'
 import 'package:multi_store_application/dashboard_component/dash_order.dart';
 import 'package:multi_store_application/dashboard_component/dash_settings.dart';
 import 'package:multi_store_application/dashboard_component/dash_statistic.dart';
-import 'package:multi_store_application/dashboard_component/mystore_screen.dart';
+import 'package:multi_store_application/screens/vistit_store_screen.dart';
 import 'package:multi_store_application/screens/welcome_screen.dart';
 import 'package:multi_store_application/widgets/alertdialog.dart';
 import 'package:multi_store_application/widgets/appbar_widgets.dart';
@@ -28,13 +28,14 @@ const List<IconData> icons = [
   Icons.show_chart
 ];
 
-const List dashboardScreens = [
-  DashMyStore(),
-  DashOrderScreen(),
-  DashMangaeProduct(),
-  DashSettings(),
-  DashBalanceScreen(),
-  DashStatistic(),
+List dashboardScreens = [
+  // DashMyStore(),
+  VisitStoreScreen(sid: FirebaseAuth.instance.currentUser!.uid),
+  const DashOrderScreen(),
+  const DashMangaeProduct(),
+  const DashSettings(),
+  const DashBalanceScreen(),
+  const DashStatistic(),
 ];
 
 class DashBoardScreen extends StatelessWidget {

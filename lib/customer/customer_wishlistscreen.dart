@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:multi_store_application/provider/cart_provider.dart';
 import 'package:multi_store_application/screens/customer_main_screen.dart';
 import 'package:multi_store_application/widgets/appbar_widgets.dart';
-import 'package:multi_store_application/widgets/cart_model.dart';
 import 'package:provider/provider.dart';
 
-class CustomerCartScreen extends StatefulWidget {
+class WishListScreen extends StatefulWidget {
   final bool isback;
-  const CustomerCartScreen({super.key, this.isback = false});
+  const WishListScreen({super.key, this.isback = false});
 
   @override
-  State<CustomerCartScreen> createState() => _CustomerCartScreenState();
+  State<WishListScreen> createState() => _WishListScreenState();
 }
 
-class _CustomerCartScreenState extends State<CustomerCartScreen> {
+class _WishListScreenState extends State<WishListScreen> {
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -177,8 +177,91 @@ class CartItemW extends StatelessWidget {
                         child: Image.network(product.imageUrl.first),
                       ),
                       Flexible(
-                        child: CardListModel(
-                            product: product, cart: context.read<Cart>()),
+                        child: Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                product.name,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontFamily: "Poppins",
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.grey.shade600,
+                                    fontSize: 16.0),
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Rs. ${product.price.toStringAsFixed(2)}',
+                                    style: const TextStyle(
+                                        color: Colors.red,
+                                        fontFamily: "Poppins",
+                                        fontSize: 16.0),
+                                  ),
+                                  Container(
+                                    height: 35.0,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        product.qty == 1
+                                            ? IconButton(
+                                                onPressed: () {
+                                                  cart.removeItem(product);
+                                                },
+                                                icon: const Icon(
+                                                  Icons.delete_forever,
+                                                  size: 16.0,
+                                                ),
+                                              )
+                                            : IconButton(
+                                                onPressed: () {
+                                                  cart.reduceByOne(product);
+                                                },
+                                                icon: const Icon(
+                                                  FontAwesomeIcons.minus,
+                                                  size: 16.0,
+                                                ),
+                                              ),
+                                        Text(
+                                          // "123",
+                                          cart.getItems[index].qty.toString(),
+                                          style: product.qty == product.qntty
+                                              ? const TextStyle(
+                                                  fontSize: 20.0,
+                                                  fontFamily: 'Poppins',
+                                                  color: Colors.red)
+                                              : const TextStyle(
+                                                  fontSize: 20.0,
+                                                  fontFamily: 'Poppins'),
+                                        ),
+                                        IconButton(
+                                          onPressed:
+                                              product.qty == product.qntty
+                                                  ? null
+                                                  : () {
+                                                      cart.increment(product);
+                                                    },
+                                          icon: const Icon(
+                                            FontAwesomeIcons.plus,
+                                            size: 16.0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
                       )
                     ],
                   ),

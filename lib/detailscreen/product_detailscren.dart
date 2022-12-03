@@ -1,12 +1,19 @@
+import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:multi_store_application/Modelwidgets/home_products_widgets.dart';
 import 'package:multi_store_application/minor_screen/full_view_image.dart';
+import 'package:multi_store_application/provider/cart_provider.dart';
+import 'package:multi_store_application/provider/wishlist_product.dart';
+import 'package:multi_store_application/screens/customer_cart_screen.dart';
+import 'package:multi_store_application/screens/vistit_store_screen.dart';
 import 'package:multi_store_application/widgets/button_animlogo.dart';
 import 'package:multi_store_application/widgets/listtile_widget.dart';
+import 'package:provider/provider.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
+import 'package:collection/collection.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final dynamic prodlist;
@@ -30,12 +37,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         child: Scaffold(
           body: SingleChildScrollView(
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Stack(
                   children: [
                     InkWell(
                       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>  FullScreenView(imageList: productimage,))),
+                          builder: (context) => FullScreenView(
+                                imageList: productimage,
+                              ))),
                       child: SizedBox(
                         height: MediaQuery.of(context).size.height * 0.45,
                         child: Swiper(
@@ -89,11 +99,42 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     Text(
                         " Rs. ${widget.prodlist['price'].toStringAsFixed(2)} "),
                     IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.favorite_border,
-                        color: Colors.red,
-                      ),
+                      onPressed: () {
+                        //TODO
+
+                        context.read<Wish>().getwishItems.firstWhereOrNull(
+                                    (prod) =>
+                                        prod.documentid ==
+                                        widget.prodlist['prodId']) !=
+                                null
+                            ? context
+                                .read<Wish>()
+                                .removeThis(widget.prodlist['prodId'])
+                            : context.read<Wish>().addWishItems(
+                                  widget.prodlist['productname'],
+                                  widget.prodlist['price'],
+                                  1,
+                                  widget.prodlist['instock'],
+                                  widget.prodlist['productimages'],
+                                  widget.prodlist['prodId'],
+                                  widget.prodlist['sid'],
+                                );
+                      },
+                      icon: context.watch<Wish>().getwishItems.firstWhereOrNull(
+                                  (prod) =>
+                                      prod.documentid ==
+                                      widget.prodlist['prodId']) !=
+                              null
+                          ? const Icon(
+                              Icons.favorite,
+                              color: Colors.red,
+                              size: 35.0,
+                            )
+                          : const Icon(
+                              Icons.favorite_border,
+                              color: Colors.red,
+                              size: 35.0,
+                            ),
                     ),
                   ],
                 ),
@@ -149,14 +190,63 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return VisitStoreScreen(sid: widget.prodlist['sid']);
+                    }));
+                  },
                   icon: const Icon(Icons.store),
                 ),
                 IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.shopping_cart),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const CustomerCartScreen(
+                                  isback: true,
+                                )));
+                  },
+                  icon: Badge(
+                      showBadge:
+                          context.read<Cart>().getItems.isEmpty ? false : true,
+                      padding: const EdgeInsets.all(2.0),
+                      badgeColor: Colors.yellow,
+                      badgeContent: Text(
+                        context.watch<Cart>().getItems.length.toString(),
+                        style: const TextStyle(
+                            fontSize: 16.0, fontWeight: FontWeight.w500),
+                      ),
+                      child: const Icon(Icons.shopping_cart)),
                 ),
-                MaterialYellowButton(label: "order now", onpressed: () {}),
+                MaterialYellowButton(
+                    label: context.read<Cart>().getItems.firstWhereOrNull(
+                                (prod) =>
+                                    prod.documentid ==
+                                    widget.prodlist['prodId']) !=
+                            null
+                        ? "Product Added "
+                        : "order now",
+                    onpressed: () {
+                      context.read<Cart>().getItems.firstWhereOrNull((prod) =>
+                                  prod.documentid ==
+                                  widget.prodlist['prodId']) !=
+                              null
+                          ? ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                              content: Text("item already exist !"),
+                              backgroundColor: Colors.yellow,
+                            ))
+                          : context.read<Cart>().addItems(
+                                widget.prodlist['productname'],
+                                widget.prodlist['price'],
+                                1,
+                                widget.prodlist['instock'],
+                                widget.prodlist['productimages'],
+                                widget.prodlist['prodId'],
+                                widget.prodlist['sid'],
+                              );
+                    }),
               ],
             ),
           ),
