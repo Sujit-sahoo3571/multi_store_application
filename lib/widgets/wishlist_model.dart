@@ -5,7 +5,6 @@ import 'package:multi_store_application/provider/wishlist_product.dart';
 import 'package:provider/provider.dart';
 import 'package:collection/collection.dart';
 
-
 class wishListModel extends StatelessWidget {
   const wishListModel({
     Key? key,
@@ -58,9 +57,6 @@ class wishListModel extends StatelessWidget {
                             children: [
                               IconButton(
                                 onPressed: () {
-                                  // context
-                                  //     .read<Wish>()
-                                  //     .removeItem(product);
                                   showDialog(
                                     context: context,
                                     builder: (context) => AlertDialog(
@@ -91,10 +87,11 @@ class wishListModel extends StatelessWidget {
                                 width: 10.0,
                               ),
                               context.watch<Cart>().getItems.firstWhereOrNull(
-                                          (element) =>
-                                              element.documentid ==
-                                              product.documentid) !=
-                                      null
+                                              (element) =>
+                                                  element.documentid ==
+                                                  product.documentid) !=
+                                          null ||
+                                      product.qntty == 0
                                   ? const SizedBox()
                                   : IconButton(
                                       onPressed: () {

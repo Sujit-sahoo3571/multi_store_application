@@ -138,8 +138,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ),
                   ],
                 ),
-                Text(
-                    ' ${widget.prodlist['instock']} No. of Pieces Available on Store. '),
+                widget.prodlist['instock'] == 0
+                    ? const Text(
+                        "Out of Stock ",
+                        style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w600),
+                      )
+                    : Text(
+                        ' ${widget.prodlist['instock']} No. of Pieces Available on Store. ',
+                        style: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w400),
+                      ),
                 const AccountInfoText(title: '  Item Description  '),
                 Text(widget.prodlist['productdesc']),
                 const AccountInfoText(title: '  Similar Products  '),
@@ -228,24 +241,33 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ? "Product Added "
                         : "order now",
                     onpressed: () {
-                      context.read<Cart>().getItems.firstWhereOrNull((prod) =>
+                      if (widget.prodlist['instock'] == 0) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text("This item Out of Stock!"),
+                          backgroundColor: Colors.red,
+                        ));
+                      } else if (context.read<Cart>().getItems.firstWhereOrNull(
+                              (prod) =>
                                   prod.documentid ==
                                   widget.prodlist['prodId']) !=
-                              null
-                          ? ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                              content: Text("item already exist !"),
-                              backgroundColor: Colors.yellow,
-                            ))
-                          : context.read<Cart>().addItems(
-                                widget.prodlist['productname'],
-                                widget.prodlist['price'],
-                                1,
-                                widget.prodlist['instock'],
-                                widget.prodlist['productimages'],
-                                widget.prodlist['prodId'],
-                                widget.prodlist['sid'],
-                              );
+                          null) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text("item already exist !"),
+                          backgroundColor: Colors.yellow,
+                        ));
+                      } else {
+                        context.read<Cart>().addItems(
+                              widget.prodlist['productname'],
+                              widget.prodlist['price'],
+                              1,
+                              widget.prodlist['instock'],
+                              widget.prodlist['productimages'],
+                              widget.prodlist['prodId'],
+                              widget.prodlist['sid'],
+                            );
+                      }
                     }),
               ],
             ),

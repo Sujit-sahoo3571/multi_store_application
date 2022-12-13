@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:multi_store_application/minor_screen/place_order.dart';
 import 'package:multi_store_application/provider/cart_provider.dart';
 import 'package:multi_store_application/screens/customer_main_screen.dart';
 import 'package:multi_store_application/widgets/appbar_widgets.dart';
@@ -16,6 +17,7 @@ class CustomerCartScreen extends StatefulWidget {
 class _CustomerCartScreenState extends State<CustomerCartScreen> {
   @override
   Widget build(BuildContext context) {
+    double total = context.watch<Cart>().totalPrice;
     return Material(
       child: SafeArea(
         child: Scaffold(
@@ -65,7 +67,10 @@ class _CustomerCartScreenState extends State<CustomerCartScreen> {
             backgroundColor: Colors.white,
           ),
           body: context.watch<Cart>().getItems.isNotEmpty
-              ? const CartItemW()
+              ? const Padding(
+                  padding: EdgeInsets.only(bottom: 46.0),
+                  child: CartItemW(),
+                )
               : const EmptyCartW(),
           bottomSheet: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -79,7 +84,7 @@ class _CustomerCartScreenState extends State<CustomerCartScreen> {
                         style: TextStyle(fontSize: 16.0),
                       ),
                       Text(
-                        context.watch<Cart>().totalPrice.toStringAsFixed(2),
+                        total.toStringAsFixed(2),
                         style: const TextStyle(
                             fontSize: 16.0,
                             color: Colors.red,
@@ -92,7 +97,16 @@ class _CustomerCartScreenState extends State<CustomerCartScreen> {
                     color: Colors.yellow,
                     borderRadius: BorderRadius.circular(20.0),
                     child: MaterialButton(
-                      onPressed: () {},
+                      onPressed: total == 0.0
+                          ? null
+                          : () {
+                              // print("place order ");
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const PlaceOrderScreen()));
+                            },
                       child: const Text("CheckOut"),
                     ),
                   )
