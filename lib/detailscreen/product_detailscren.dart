@@ -27,6 +27,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   late List<dynamic> productimage = widget.prodlist['productimages'];
   @override
   Widget build(BuildContext context) {
+    var onSale = widget.prodlist['discount'];
+    var salePrice = onSale != 0
+        ? ((1 - (onSale / 100)) * widget.prodlist["price"])
+        : widget.prodlist["price"];
+
     final Stream<QuerySnapshot> _productstream = FirebaseFirestore.instance
         .collection('products')
         .where('maincategory', isEqualTo: widget.prodlist['maincategory'])
@@ -96,8 +101,42 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text(
-                        " Rs. ${widget.prodlist['price'].toStringAsFixed(2)} "),
+                    // change the discount price .
+                    // Text(
+                    //     " Rs. ${widget.prodlist['price'].toStringAsFixed(2)} "),
+                    Row(
+                      children: [
+                        const Text("Rs.",
+                            style: TextStyle(
+                                fontSize: 14.0,
+                                color: Colors.red,
+                                fontWeight: FontWeight.w600)),
+                        Text(
+                          '${widget.prodlist['price'].toStringAsFixed(2)} ',
+                          style: onSale != 0
+                              ? const TextStyle(
+                                  fontSize: 12.0,
+                                  color: Colors.grey,
+                                  decoration: TextDecoration.lineThrough,
+                                  fontWeight: FontWeight.w600)
+                              : const TextStyle(
+                                  fontSize: 14.0,
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.w600),
+                        ),
+                        onSale != 0
+                            ? Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(" ${salePrice.toStringAsFixed(2)}",
+                                    style: const TextStyle(
+                                        fontSize: 14.0,
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.w600)),
+                              )
+                            : const Text(""),
+                      ],
+                    ),
+
                     IconButton(
                       onPressed: () {
                         //TODO
@@ -112,7 +151,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 .removeThis(widget.prodlist['prodId'])
                             : context.read<Wish>().addWishItems(
                                   widget.prodlist['productname'],
-                                  widget.prodlist['price'],
+                                  // widget.prodlist['price'],
+                                  salePrice,
                                   1,
                                   widget.prodlist['instock'],
                                   widget.prodlist['productimages'],
@@ -260,7 +300,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       } else {
                         context.read<Cart>().addItems(
                               widget.prodlist['productname'],
-                              widget.prodlist['price'],
+                              //
+                              // onSale != 0 ? salePrice :
+                              // widget.prodlist['price'],
+                              salePrice,
                               1,
                               widget.prodlist['instock'],
                               widget.prodlist['productimages'],

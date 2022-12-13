@@ -96,7 +96,7 @@ class wishListModel extends StatelessWidget {
                                   : IconButton(
                                       onPressed: () {
                                         context.read<Cart>().addItems(
-                                              product.name,
+                                              product.name,                                              
                                               product.price,
                                               1,
                                               product.qntty,
