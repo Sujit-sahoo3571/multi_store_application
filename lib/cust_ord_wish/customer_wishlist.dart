@@ -1,12 +1,10 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:multi_store_application/provider/cart_provider.dart';
-import 'package:multi_store_application/provider/product_class.dart';
 import 'package:multi_store_application/provider/wishlist_product.dart';
 import 'package:multi_store_application/widgets/appbar_widgets.dart';
 import 'package:multi_store_application/widgets/wishlist_model.dart';
 import 'package:provider/provider.dart';
-import 'package:collection/collection.dart';
+// import 'package:collection/collection.dart';
 
 class CustomerWishListScreen extends StatefulWidget {
   const CustomerWishListScreen({

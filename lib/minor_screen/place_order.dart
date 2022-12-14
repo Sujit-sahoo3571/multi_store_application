@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_store_application/minor_screen/payment_screen.dart';
 import 'package:multi_store_application/provider/cart_provider.dart';
-import 'package:multi_store_application/widgets/appbar_widgets.dart';
 import 'package:multi_store_application/widgets/button_animlogo.dart';
 import 'package:provider/provider.dart';
 

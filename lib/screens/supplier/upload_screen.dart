@@ -9,6 +9,7 @@ import 'package:multi_store_application/utility/utilities.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:path/path.dart' as path;
 import 'package:uuid/uuid.dart';
+import 'package:collection/collection.dart';
 
 class UploadProductScreen extends StatefulWidget {
   const UploadProductScreen({super.key});
@@ -227,6 +228,9 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
                       child: SizedBox(
                         width: screensize.width * 0.38,
                         child: TextFormField(
+                          initialValue: "0",
+                          autocorrect: false,
+                          //TODO Error
                           maxLength: 2,
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -240,7 +244,7 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
                             discount = int.parse(value!);
                           },
                           keyboardType: const TextInputType.numberWithOptions(
-                              decimal: true),
+                              decimal: false),
                           decoration: textFieldDecoration.copyWith(
                             hintText: "discount %",
                             labelText: "discount",

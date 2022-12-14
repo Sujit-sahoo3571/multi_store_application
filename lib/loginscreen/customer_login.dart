@@ -157,7 +157,7 @@ class _CustomerLogInScreenState extends State<CustomerLogInScreen> {
     FocusManager.instance.primaryFocus?.unfocus();
     if (_formKey.currentState!.validate()) {
       try {
-        final credential =
+        // final credential =
             await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: email,
           password: password,
@@ -197,7 +197,7 @@ class _CustomerLogInScreenState extends State<CustomerLogInScreen> {
       }
     } else {
       stopprocessing();
-      print('invalid');
+      // print('invalid');
     }
   }
 }

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_store_application/widgets/appbar_widgets.dart';
-import 'package:multi_store_application/widgets/button_animlogo.dart';
 
 class DashBalanceScreen extends StatelessWidget {
   const DashBalanceScreen({super.key});

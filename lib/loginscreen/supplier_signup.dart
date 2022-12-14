@@ -309,7 +309,7 @@ class _SupplierSignUpScreenState extends State<SupplierSignUpScreen> {
       }
     } else {
       stopprocessing();
-      print('invalid');
+      // print('invalid');
     }
   }
 }

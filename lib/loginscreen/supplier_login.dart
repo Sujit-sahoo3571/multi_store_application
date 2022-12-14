@@ -152,7 +152,7 @@ class _SupplierLogInScreenState extends State<SupplierLogInScreen> {
     FocusManager.instance.primaryFocus?.unfocus();
     if (_formKey.currentState!.validate()) {
       try {
-        final credential =
+        // final credential =
             await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: email,
           password: password,
@@ -167,14 +167,14 @@ class _SupplierLogInScreenState extends State<SupplierLogInScreen> {
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
           stopprocessing();
-          print('No user found for that email.');
+          // print('No user found for that email.');
           showAlertDialogmsg(
               context: context,
               title: "No User Found!",
               content: "No user found for that email.");
         } else if (e.code == 'wrong-password') {
           stopprocessing();
-          print('Wrong password provided for that user.');
+          // print('Wrong password provided for that user.');
           showAlertDialogmsg(
               context: context,
               title: "Wrong Password",
@@ -182,11 +182,11 @@ class _SupplierLogInScreenState extends State<SupplierLogInScreen> {
         }
       } catch (e) {
         stopprocessing();
-        print(e.toString());
+        // print(e.toString());
       }
     } else {
       stopprocessing();
-      print('invalid');
+      // print('invalid');
     }
   }
 }
