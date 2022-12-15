@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:multi_store_application/Modelwidgets/home_products_widgets.dart';
+import 'package:multi_store_application/screens/supplier/editstore/edit_store.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 
@@ -52,12 +53,20 @@ class _VisitStoreScreenState extends State<VisitStoreScreen> {
 
           return Scaffold(
             backgroundColor: Colors.blueGrey.shade400,
+            // store background
             appBar: AppBar(
               toolbarHeight: 100.0,
-              flexibleSpace: Image.asset(
-                "assets/images/bgimage.jpg",
-                fit: BoxFit.cover,
-              ),
+              flexibleSpace: data['coverimage'] == ""
+                  ? Image.asset(
+                      "assets/images/bgimage.jpg",
+                      fit: BoxFit.cover,
+                    )
+                  : Image.network(
+                      data["coverimage"],
+                      fit: BoxFit.cover,
+                    ),
+
+              //storelogo and name in a row
               title: Row(
                 children: [
                   Container(
@@ -85,13 +94,25 @@ class _VisitStoreScreenState extends State<VisitStoreScreen> {
                     ),
                   ),
                   (data['sid'] == FirebaseAuth.instance.currentUser!.uid)
-                      ? ElevatedButton(
-                          onPressed: () {},
+                      ?
+
+                      // edit the store
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EditStore(
+                                          data: data,
+                                        )));
+                          },
                           child: Row(
                             children: const [Text("Edit "), Icon(Icons.edit)],
                           ),
                         )
-                      : ElevatedButton(
+                      :
+                      // follow the store
+                      ElevatedButton(
                           onPressed: () {
                             setState(() {
                               isFollow = !isFollow;

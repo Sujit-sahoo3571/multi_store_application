@@ -53,6 +53,8 @@ dependencies:
   collection: ^1.16.0
   intl: ^0.17.0
   # path: ^1.8.3
+  flutter_rating_bar: ^4.0.1
+  expandable: ^5.0.1
 
 dev_dependencies:
   flutter_test:

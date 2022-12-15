@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:multi_store_application/Modelwidgets/home_products_widgets.dart';
@@ -36,6 +37,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         .collection('products')
         .where('maincategory', isEqualTo: widget.prodlist['maincategory'])
         .where('subcategory', isEqualTo: widget.prodlist['subcategory'])
+        .snapshots();
+    final Stream<QuerySnapshot> _reviewStream = FirebaseFirestore.instance
+        .collection('products')
+        .doc(widget.prodlist["prodId"])
+        .collection("reviews")
         .snapshots();
     return Material(
       child: SafeArea(
@@ -195,6 +201,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                 const AccountInfoText(title: '  Item Description  '),
                 Text(widget.prodlist['productdesc']),
+// reviews
+// /
+                ExpandableTheme(
+                    data: const ExpandableThemeData(
+                        iconSize: 30.0, iconColor: Colors.blue),
+                    child: review(_reviewStream)),
+
                 const AccountInfoText(title: '  Similar Products  '),
                 SizedBox(
                   height: 400.0,
@@ -319,4 +332,78 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       ),
     );
   }
+}
+
+Widget review(var reviewStream) {
+  return ExpandablePanel(
+      header: const Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Text(
+          "Reviews",
+          style: TextStyle(color: Colors.cyan, fontSize: 20.0),
+        ),
+      ),
+      collapsed: SizedBox(
+        height: 230.0,
+        child: reviewAll(reviewStream),
+      ),
+      expanded: reviewAll(reviewStream));
+}
+
+Widget reviewAll(var reviewStream) {
+  return StreamBuilder<QuerySnapshot>(
+      stream: reviewStream,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot2) {
+        if (snapshot2.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        if (snapshot2.data!.docs.isEmpty) {
+          return const Center(
+            child: Text(
+              "Be the first one to give Review . ",
+              textAlign: TextAlign.center,
+              softWrap: true,
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 24.0,
+                color: Colors.grey,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          );
+        }
+
+        return ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: snapshot2.data!.docs.length,
+            itemBuilder: (context, index) {
+              var reviewdata = snapshot2.data!.docs[index];
+              return ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(reviewdata["profileimage"]),
+                ),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(reviewdata["name"]),
+                    Row(
+                      children: [
+                        Text(reviewdata["rate"].toString()),
+                        const Icon(
+                          Icons.star,
+                          size: 28.0,
+                          color: Colors.yellow,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+                subtitle: Text(reviewdata["comment"]),
+              );
+            });
+      });
 }
