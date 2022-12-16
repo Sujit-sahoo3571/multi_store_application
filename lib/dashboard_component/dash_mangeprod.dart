@@ -5,7 +5,7 @@ import 'package:multi_store_application/widgets/appbar_widgets.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 
-import '../Modelwidgets/home_products_widgets.dart';
+import '../widgets/home_products_widgets.dart';
 
 class DashMangaeProduct extends StatelessWidget {
   const DashMangaeProduct({super.key});

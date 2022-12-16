@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:multi_store_application/subcategoryscreen/subcategory.dart';
+import 'package:multi_store_application/widgets/subcategory.dart';
+
 
 const barTextStyle =
     TextStyle(fontSize: 18.0, letterSpacing: 2, fontWeight: FontWeight.bold);

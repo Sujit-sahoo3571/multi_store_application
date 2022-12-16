@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
-import 'package:multi_store_application/Modelwidgets/home_products_widgets.dart';
+import 'package:multi_store_application/widgets/home_products_widgets.dart';
 import 'package:multi_store_application/minor_screen/full_view_image.dart';
 import 'package:multi_store_application/provider/cart_provider.dart';
 import 'package:multi_store_application/provider/wishlist_product.dart';
