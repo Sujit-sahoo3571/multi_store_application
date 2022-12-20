@@ -57,6 +57,38 @@ class MaterialYellowButton extends StatelessWidget {
   }
 }
 
+// green button
+class MaterialGreenButton extends StatelessWidget {
+  final String label;
+  final void Function()? onpressed;
+  final double elevation;
+  final double width;
+  const MaterialGreenButton({
+    Key? key,
+    required this.label,
+    this.width = 0.25,
+    required this.onpressed,
+    this.elevation = 0.0,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      elevation: elevation,
+      borderRadius: BorderRadius.circular(50.0),
+      color: Colors.green,
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width * width,
+        onPressed: onpressed,
+        child: Text(
+          label,
+          style: const TextStyle(color: Colors.white),
+        ),
+      ),
+    );
+  }
+}
+
 // animated logo and Google icon buttons
 
 class GoogleIconButton extends StatelessWidget {

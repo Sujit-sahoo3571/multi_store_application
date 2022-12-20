@@ -3,10 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_store_application/cust_ord_wish/customer_order.dart';
 import 'package:multi_store_application/cust_ord_wish/customer_wishlist.dart';
+import 'package:multi_store_application/screens/address_book.dart';
 import 'package:multi_store_application/screens/customer_cart_screen.dart';
 import 'package:multi_store_application/screens/welcome_screen.dart';
 import 'package:multi_store_application/widgets/alertdialog.dart';
 import 'package:multi_store_application/widgets/listtile_widget.dart';
+
+import 'add_address.dart';
 
 const kdivider = Divider(
   height: 10.0,
@@ -176,6 +179,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen> {
                 ],
               ),
             ),
+            //address
             const AccountInfoText(title: ' Account Profile '),
             Container(
               decoration: BoxDecoration(
@@ -208,9 +212,15 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen> {
                     Icons.location_on,
                   ),
                   title: const Text("Your Address: "),
-                  subtitle: Text(data['address'] == ''
-                      ? 'example: Bhubneswar,India.'
-                      : data['address']),
+                  subtitle: Text(userAddress(data)),
+                  onTap: FirebaseAuth.instance.currentUser!.isAnonymous
+                      ? null
+                      : () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const AddressBook())); // AddAddress()
+                        },
                 ),
               ]),
             ),
@@ -272,5 +282,17 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen> {
         ),
       ),
     );
+  }
+
+//function and methods
+//userAddress.
+  String userAddress(dynamic data) {
+    if (FirebaseAuth.instance.currentUser!.isAnonymous) {
+      return "example: Bhubaneswar, unit-4 ,India";
+    } else if (!FirebaseAuth.instance.currentUser!.isAnonymous &&
+        data['address'] == "") {
+      return "set your Address ";
+    }
+    return data["address"];
   }
 }
