@@ -47,11 +47,14 @@ class CustomerStoreScreen extends StatelessWidget {
                                   snapshot.data!.docs[index]['storelogo']),
                             ),
                           ),
-                          Text(
-                            snapshot.data!.docs[index]["storename"],
-                            style: const TextStyle(
-                              fontSize: 20.0,
-                              fontFamily: "Poppins",
+                          Expanded(
+                            child: Text(
+                              snapshot.data!.docs[index]["storename"],
+                              softWrap: true,
+                              style: const TextStyle(
+                                fontSize: 16.0,
+                                fontFamily: "Poppins",
+                              ),
                             ),
                           ),
                         ],

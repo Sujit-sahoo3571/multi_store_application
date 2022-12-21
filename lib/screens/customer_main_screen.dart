@@ -27,8 +27,8 @@ class _CustomerBottomNavigationState extends State<CustomerBottomNavigation> {
     const CategoryScreen(),
     const CustomerStoreScreen(),
    const CustomerCartScreen(),
-    CustomerProfileScreen(
-      documentId: FirebaseAuth.instance.currentUser!.uid,
+  const   CustomerProfileScreen(
+      // documentId: FirebaseAuth.instance.currentUser!.uid,
     ),
   ];
   @override

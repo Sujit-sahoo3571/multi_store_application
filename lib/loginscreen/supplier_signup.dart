@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_store_application/loginscreen/supplier_login.dart';
+import 'package:multi_store_application/provider/auth_repo.dart';
 import 'package:multi_store_application/screens/welcome_screen.dart';
 import 'package:multi_store_application/widgets/alertdialog.dart';
 import 'package:multi_store_application/widgets/button_animlogo.dart';
@@ -191,8 +192,8 @@ class _SupplierSignUpScreenState extends State<SupplierSignUpScreen> {
                             });
                           },
                           icon: Icon(isShowPassword
-                              ? Icons.visibility
-                              : Icons.visibility_off),
+                              ? Icons.visibility_off
+                              : Icons.visibility),
                           color: Colors.grey,
                         )),
                   ),
@@ -237,12 +238,9 @@ class _SupplierSignUpScreenState extends State<SupplierSignUpScreen> {
     if (_formKey.currentState!.validate()) {
       if (_image != null) {
         try {
-          final credential =
-              await FirebaseAuth.instance.createUserWithEmailAndPassword(
-            email: email,
-            password: password,
-          );
+          await AuthRepo.signupWithEmailAndPassword(email, password);
 
+          await AuthRepo.emailVerification();
           firebase_storage.Reference ref = firebase_storage
               .FirebaseStorage.instance
               .ref('supplierimages/$email.jpg');
@@ -251,7 +249,12 @@ class _SupplierSignUpScreenState extends State<SupplierSignUpScreen> {
 
           storelogo = await ref.getDownloadURL();
 
-          _uid = FirebaseAuth.instance.currentUser!.uid;
+          // _uid = FirebaseAuth.instance.currentUser!.uid;
+          _uid = await AuthRepo.uid;
+
+          // await FirebaseAuth.instance.currentUser!.updateDisplayName(storename);
+          // await FirebaseAuth.instance.currentUser!.updatePhotoURL(storelogo);
+          await AuthRepo.updateStoreName(storename, storelogo);
 
           await suppliers.doc(_uid).set({
             'storename': storename,
@@ -261,7 +264,7 @@ class _SupplierSignUpScreenState extends State<SupplierSignUpScreen> {
             'address': '',
             'sid': _uid,
             'coverimage': '',
-            'role':'admin',
+            'role': 'admin',
           });
 
           _formKey.currentState!.reset();

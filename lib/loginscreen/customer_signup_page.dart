@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:multi_store_application/loginscreen/customer_login.dart';
+import 'package:multi_store_application/provider/auth_repo.dart';
 import 'package:multi_store_application/screens/welcome_screen.dart';
 import 'package:multi_store_application/widgets/alertdialog.dart';
 import 'package:multi_store_application/widgets/button_animlogo.dart';
@@ -191,8 +192,8 @@ class _CustomerSignUpScreenState extends State<CustomerSignUpScreen> {
                             });
                           },
                           icon: Icon(isShowPassword
-                              ? Icons.visibility
-                              : Icons.visibility_off),
+                              ? Icons.visibility_off
+                              : Icons.visibility),
                           color: Colors.grey,
                         )),
                   ),
@@ -237,11 +238,8 @@ class _CustomerSignUpScreenState extends State<CustomerSignUpScreen> {
     if (_formKey.currentState!.validate()) {
       if (_image != null) {
         try {
-          final credential =
-              await FirebaseAuth.instance.createUserWithEmailAndPassword(
-            email: email,
-            password: password,
-          );
+          await AuthRepo.signupWithEmailAndPassword(email, password);
+          await AuthRepo.emailVerification();
 
           //TODO
           firebase_storage.Reference ref = firebase_storage
@@ -251,8 +249,9 @@ class _CustomerSignUpScreenState extends State<CustomerSignUpScreen> {
           await ref.putFile(io.File(_image!.path));
 
           profileimage = await ref.getDownloadURL();
+          _uid = await AuthRepo.uid;
 
-          _uid = FirebaseAuth.instance.currentUser!.uid;
+          await AuthRepo.updateStoreName(name, profileimage);
 
           await customers.doc(_uid).set({
             'name': name,
@@ -261,7 +260,7 @@ class _CustomerSignUpScreenState extends State<CustomerSignUpScreen> {
             'profileimage': profileimage,
             'address': '',
             'cid': _uid,
-            'role':'user',
+            'role': 'user',
           });
 
           _formKey.currentState!.reset();

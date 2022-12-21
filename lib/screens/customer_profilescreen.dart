@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:multi_store_application/cust_ord_wish/customer_order.dart';
 import 'package:multi_store_application/cust_ord_wish/customer_wishlist.dart';
 import 'package:multi_store_application/screens/address_book.dart';
+import 'package:multi_store_application/screens/change_password.dart';
 import 'package:multi_store_application/screens/customer_cart_screen.dart';
 import 'package:multi_store_application/screens/welcome_screen.dart';
 import 'package:multi_store_application/widgets/alertdialog.dart';
 import 'package:multi_store_application/widgets/listtile_widget.dart';
 
-import 'add_address.dart';
+// import 'add_address.dart';
 
 const kdivider = Divider(
   height: 10.0,
@@ -18,26 +19,32 @@ const kdivider = Divider(
 );
 
 class CustomerProfileScreen extends StatefulWidget {
-  final String documentId;
-  const CustomerProfileScreen({super.key, required this.documentId});
+  // final String documentId;
+  const CustomerProfileScreen({
+    super.key,
+  });
 
   @override
   State<CustomerProfileScreen> createState() => _CustomerProfileScreenState();
 }
 
 class _CustomerProfileScreenState extends State<CustomerProfileScreen> {
+  String documentId = FirebaseAuth.instance.currentUser!.uid;
+
   CollectionReference customers =
       FirebaseFirestore.instance.collection('customers'); //anonymus
   CollectionReference anonymus =
       FirebaseFirestore.instance.collection('anonymus');
+
   @override
   Widget build(BuildContext context) {
     final kscreen = MediaQuery.of(context).size;
+    // checkId();
 
     return FutureBuilder<DocumentSnapshot>(
       future: FirebaseAuth.instance.currentUser!.isAnonymous
-          ? anonymus.doc(widget.documentId).get()
-          : customers.doc(widget.documentId).get(),
+          ? anonymus.doc(documentId).get()
+          : customers.doc(documentId).get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {
@@ -219,7 +226,8 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const AddressBook())); // AddAddress()
+                                  builder: (context) =>
+                                      const AddressBook())); // AddAddress()
                         },
                 ),
               ]),
@@ -244,7 +252,13 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen> {
                   ListTileonTap(
                     icon: Icons.lock,
                     lable: 'Change Password',
-                    onpressed: () {},
+                    onpressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const ChangePasswordScreen()));
+                    },
                   ),
                   kdivider,
                   ListTileonTap(

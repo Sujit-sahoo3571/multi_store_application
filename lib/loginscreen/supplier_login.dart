@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:multi_store_application/loginscreen/supplier_signup.dart';
+import 'package:multi_store_application/provider/auth_repo.dart';
 import 'package:multi_store_application/screens/supplier/supplier_main_screen.dart';
 import 'package:multi_store_application/screens/welcome_screen.dart';
 import 'package:multi_store_application/widgets/alertdialog.dart';
@@ -98,8 +99,8 @@ class _SupplierLogInScreenState extends State<SupplierLogInScreen> {
                             });
                           },
                           icon: Icon(isShowPassword
-                              ? Icons.visibility
-                              : Icons.visibility_off),
+                              ? Icons.visibility_off
+                              : Icons.visibility),
                           color: Colors.grey,
                         )),
                   ),
@@ -152,18 +153,25 @@ class _SupplierLogInScreenState extends State<SupplierLogInScreen> {
     FocusManager.instance.primaryFocus?.unfocus();
     if (_formKey.currentState!.validate()) {
       try {
-        // final credential =
-            await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email,
-          password: password,
-        );
-        _formKey.currentState!.reset();
+        await AuthRepo.signInWithEmailAndPassword(email, password);
+        await AuthRepo.reload();
 
-        stopprocessing();
+        if (FirebaseAuth.instance.currentUser!.emailVerified) {
+          _formKey.currentState!.reset();
 
-        // ignore: use_build_context_synchronously
-        Navigator.pushReplacementNamed(
-            context, SupplierBottomNavigation.supplierHomeRouteName);
+          stopprocessing();
+
+          // ignore: use_build_context_synchronously
+          Navigator.pushReplacementNamed(
+              context, SupplierBottomNavigation.supplierHomeRouteName);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Check Your Inbox To Verify Email."),
+            backgroundColor: Colors.green,
+          ));
+
+          stopprocessing();
+        }
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
           stopprocessing();
