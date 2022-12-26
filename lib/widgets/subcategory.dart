@@ -5,13 +5,18 @@ import 'package:multi_store_application/widgets/home_products_widgets.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 
+import '../screens/customer_main_screen.dart';
+
 class SubCategory extends StatefulWidget {
   final String subCategoryName;
   final String mainCategoryName;
-  const SubCategory(
-      {super.key,
-      required this.mainCategoryName,
-      required this.subCategoryName});
+  final bool fromONboarding;
+  const SubCategory({
+    super.key,
+    required this.mainCategoryName,
+    required this.subCategoryName,
+    this.fromONboarding = false,
+  });
 
   @override
   State<SubCategory> createState() => _SubCategoryState();
@@ -31,7 +36,17 @@ class _SubCategoryState extends State<SubCategory> {
         centerTitle: true,
         title: AppbarTitle(subCategoryName: widget.subCategoryName),
         backgroundColor: Colors.white,
-        leading: const AppBarBackButton(),
+        leading: widget.fromONboarding
+            ? IconButton(
+                onPressed: () {
+                  Navigator.pushReplacementNamed(
+                      context, CustomerBottomNavigation.customerHomeRouteName);
+                },
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
+                ))
+            : const AppBarBackButton(),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: _productstream,

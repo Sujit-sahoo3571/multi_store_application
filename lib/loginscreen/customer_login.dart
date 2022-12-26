@@ -8,6 +8,7 @@ import 'package:multi_store_application/loginscreen/customer_signup_page.dart';
 import 'package:multi_store_application/loginscreen/forget_password.dart';
 import 'package:multi_store_application/provider/auth_repo.dart';
 import 'package:multi_store_application/screens/customer_main_screen.dart';
+import 'package:multi_store_application/screens/onboarding_screen.dart';
 import 'package:multi_store_application/screens/welcome_screen.dart';
 import 'package:multi_store_application/widgets/alertdialog.dart';
 import 'package:multi_store_application/widgets/button_animlogo.dart';
@@ -334,6 +335,8 @@ class _CustomerLogInScreenState extends State<CustomerLogInScreen> {
 
   navigate() {
     Navigator.pushReplacementNamed(
-        context, CustomerBottomNavigation.customerHomeRouteName);
+        context,
+        // CustomerBottomNavigation.customerHomeRouteName
+        OnBoardingScreen.onboarding);
   }
 }

@@ -6,6 +6,7 @@ import 'package:multi_store_application/loginscreen/supplier_signup.dart';
 import 'package:multi_store_application/provider/cart_provider.dart';
 import 'package:multi_store_application/provider/wishlist_product.dart';
 import 'package:multi_store_application/screens/customer_main_screen.dart';
+import 'package:multi_store_application/screens/onboarding_screen.dart';
 import 'package:multi_store_application/screens/supplier/supplier_main_screen.dart';
 import 'package:multi_store_application/screens/welcome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,7 +17,7 @@ void main() async {
   await Firebase.initializeApp();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => Cart()),
-    ChangeNotifierProvider(create: (_) => Wish()), 
+    ChangeNotifierProvider(create: (_) => Wish()),
   ], child: const MyApp()));
 }
 
@@ -30,11 +31,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: WelcomeScreen.welcomeRouteName,
+      initialRoute:
+          // OnBoardingScreen.onboarding,
+          WelcomeScreen.welcomeRouteName,
       routes: {
         WelcomeScreen.welcomeRouteName: (context) => const WelcomeScreen(),
         CustomerBottomNavigation.customerHomeRouteName: (context) =>
             CustomerBottomNavigation(),
+        OnBoardingScreen.onboarding: (context) => const OnBoardingScreen(),
         SupplierBottomNavigation.supplierHomeRouteName: (context) =>
             SupplierBottomNavigation(),
         CustomerLogInScreen.signInRoutName: (context) =>

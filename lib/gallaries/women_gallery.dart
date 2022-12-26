@@ -4,8 +4,11 @@ import 'package:multi_store_application/widgets/home_products_widgets.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 
+import '../screens/customer_main_screen.dart';
+
 class WomenGalleryScreen extends StatefulWidget {
-  const WomenGalleryScreen({super.key});
+  final bool fromONBording;
+  const WomenGalleryScreen({super.key, this.fromONBording = false});
 
   @override
   State<WomenGalleryScreen> createState() => _WomenGalleryScreenState();
@@ -18,45 +21,68 @@ class _WomenGalleryScreenState extends State<WomenGalleryScreen> {
       .snapshots();
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-        stream: _productStream,
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return const Text("something went wrong ");
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          if (snapshot.data!.docs.isEmpty) {
-            return const Center(
-              child: Text(
-                "This category has no items for now.\nwe will update this soon!.",
-                textAlign: TextAlign.center,
-                softWrap: true,
-                style: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.w600,
-                ),
+    return Scaffold(
+      appBar: widget.fromONBording
+          ? AppBar(
+              elevation: 0.0,
+              backgroundColor: Colors.white,
+              title: const Text(
+                "Sale is Live Now! ",
+                style: TextStyle(color: Colors.red),
               ),
-            );
-          }
-
-          return StaggeredGridView.countBuilder(
-            crossAxisCount: 2,
-            crossAxisSpacing: 10.0,
-            mainAxisSpacing: 10.0,
-            itemCount: snapshot.data!.docs.length,
-            itemBuilder: (context, index) {
-              return ProductsModelHomeW(
-                products: snapshot.data!.docs[index],
+              leading: IconButton(
+                  onPressed: () {
+                    //
+                    Navigator.pushReplacementNamed(context,
+                        CustomerBottomNavigation.customerHomeRouteName);
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                  )),
+            )
+          : null,
+      body: StreamBuilder<QuerySnapshot>(
+          stream: _productStream,
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasError) {
+              return const Text("something went wrong ");
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
               );
-            },
-            staggeredTileBuilder: (index) => const StaggeredTile.fit(1),
-          );
-        });
+            }
+
+            if (snapshot.data!.docs.isEmpty) {
+              return const Center(
+                child: Text(
+                  "This category has no items for now.\nwe will update this soon!.",
+                  textAlign: TextAlign.center,
+                  softWrap: true,
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              );
+            }
+
+            return StaggeredGridView.countBuilder(
+              crossAxisCount: 2,
+              crossAxisSpacing: 10.0,
+              mainAxisSpacing: 10.0,
+              itemCount: snapshot.data!.docs.length,
+              itemBuilder: (context, index) {
+                return ProductsModelHomeW(
+                  products: snapshot.data!.docs[index],
+                );
+              },
+              staggeredTileBuilder: (index) => const StaggeredTile.fit(1),
+            );
+          }),
+    );
   }
 }
